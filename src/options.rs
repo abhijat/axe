@@ -1,7 +1,7 @@
+use std::path::PathBuf;
 use std::str::FromStr;
 
 use structopt::StructOpt;
-use std::path::PathBuf;
 
 #[derive(Debug)]
 pub enum SplitFields {
@@ -39,6 +39,10 @@ impl ToString for SplitFields {
 #[derive(Debug, StructOpt)]
 /// A utility to split a reddit dataset into individual JSON files
 pub struct Options {
+    #[structopt(short, long, default_value = "150000")]
+    /// The maximum size the hashmap will grow to before it is written to disk
+    pub max_size: usize,
+
     #[structopt(short, long)]
     /// The attribute to split the data set on
     pub split_on: SplitFields,

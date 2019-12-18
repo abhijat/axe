@@ -31,7 +31,7 @@ fn parse_json(options: &Options) {
         .expect(&format!("Failed to read file {}", options.input_path.to_string_lossy()));
 
     let mut entries: CappedDumpableHashMap<Entry> = CappedDumpableHashMap::new(
-        150000,
+        options.max_size,
         &options.output_prefix.as_os_str().to_string_lossy(),
         Box::new(PersistDataToDisk {}),
     );
