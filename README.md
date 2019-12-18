@@ -10,6 +10,7 @@ At this time, the data can be split by the following keys:
 * Day of month (day)
 * Month (month)
 * Day of year (day-of-year)
+* Day of week (day-of-week)
 
 When the data is split, a JSON file is created for each unique key, so if the split is on subreddit, a JSON file
 is created per subreddit.

@@ -24,6 +24,7 @@ fn build_key(entry: &Entry, split_fields: &SplitFields) -> MapKey {
         SplitFields::Day => MapKey::NumKey { key: entry.created_at().day() as usize },
         SplitFields::Month => MapKey::NumKey { key: entry.created_at().month() as usize },
         SplitFields::DayOfYear => MapKey::NumKey { key: entry.created_at().ordinal() as usize },
+        SplitFields::DayOfWeek => MapKey::StringKey { key: entry.created_at().weekday().to_string() }
     }
 }
 

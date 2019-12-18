@@ -10,6 +10,7 @@ pub enum SplitFields {
     Day,
     Month,
     DayOfYear,
+    DayOfWeek,
 }
 
 impl FromStr for SplitFields {
@@ -22,6 +23,7 @@ impl FromStr for SplitFields {
             "day" => Ok(SplitFields::Day),
             "month" => Ok(SplitFields::Month),
             "day-of-year" => Ok(SplitFields::DayOfYear),
+            "day-of-week" => Ok(SplitFields::DayOfWeek),
             _ => Err("invalid argument".to_owned())
         }
     }
@@ -35,6 +37,7 @@ impl ToString for SplitFields {
             SplitFields::Day => "day".to_owned(),
             SplitFields::Month => "month".to_owned(),
             SplitFields::DayOfYear => "day-of-year".to_owned(),
+            SplitFields::DayOfWeek => "day-of-week".to_owned(),
         }
     }
 }
