@@ -1,7 +1,4 @@
-use std::fmt::Display;
 use std::fs;
-use std::hash::Hash;
-use std::io::Write;
 
 use chrono::Datelike;
 use structopt::StructOpt;

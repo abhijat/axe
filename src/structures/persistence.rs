@@ -1,11 +1,10 @@
 use std::collections::{HashMap, HashSet};
-use std::fmt::Display;
 use std::fs;
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::Path;
 
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 
 use crate::structures::MapKey;
 
