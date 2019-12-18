@@ -26,7 +26,7 @@ pub fn naive_datetime(timestamp: u64) -> NaiveDateTime {
     NaiveDateTime::from_timestamp(timestamp as i64, 0)
 }
 
-#[derive(Serialize, Deserialize, Debug, Eq, Hash, PartialOrd, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Eq, Hash, PartialOrd, PartialEq, Clone)]
 pub enum MapKey {
     StringKey {
         key: String,

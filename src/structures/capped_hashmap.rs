@@ -64,17 +64,18 @@ mod tests {
     use std::cell::Cell;
     use std::rc::Rc;
 
+    use serde::de::Unexpected::Map;
+
     use super::*;
 
-    struct Dummy<K, V> {
+    struct Dummy<V> {
         dirty: Rc<Cell<bool>>,
-        data: Rc<Cell<Option<HashMap<K, HashSet<V>>>>>,
+        data: Rc<Cell<Option<HashMap<MapKey, HashSet<V>>>>>,
     }
 
-    impl<K, V> PersistData<K, V> for Dummy<K, V>
-        where K: Clone,
-              V: Clone {
-        fn persist(&self, _prefix: &str, data: &HashMap<K, HashSet<V>>) {
+    impl<V> PersistData<V> for Dummy<V>
+        where V: Clone {
+        fn persist(&self, _prefix: &str, data: &HashMap<MapKey, HashSet<V>>) {
             self.dirty.set(true);
             self.data.set(Some(data.clone()));
         }
@@ -85,43 +86,43 @@ mod tests {
     fn capped_hashmap_dumps_calls_persist_when_full() {
         let dirty = Rc::new(Cell::new(false));
         let data = Rc::new(Cell::new(None));
-        let dummy: Dummy<usize, String> = Dummy { dirty: dirty.clone(), data: Rc::clone(&data) };
+        let dummy: Dummy<String> = Dummy { dirty: dirty.clone(), data: Rc::clone(&data) };
 
-        let mut capped_map: CappedDumpableHashMap<usize, String> = CappedDumpableHashMap::new(
+        let mut capped_map: CappedDumpableHashMap<String> = CappedDumpableHashMap::new(
             3,
             "",
             Box::new(dummy),
         );
 
-        capped_map.add(1, "".to_owned());
-        capped_map.add(1, "".to_owned());
+        capped_map.add(MapKey::NumKey { key: 1 }, "".to_owned());
+        capped_map.add(MapKey::NumKey { key: 1 }, "".to_owned());
         assert!(!dirty.get());
-        capped_map.add(1, "".to_owned());
+        capped_map.add(MapKey::NumKey { key: 1 }, "".to_owned());
         assert!(dirty.get());
     }
 
     #[test]
     fn data_is_split_by_key() {
         let data = Rc::new(Cell::new(None));
-        let dummy: Dummy<usize, String> = Dummy {
+        let dummy: Dummy<String> = Dummy {
             dirty: Rc::new(Cell::new(false)),
             data: Rc::clone(&data),
         };
 
-        let mut capped_map: CappedDumpableHashMap<usize, String> = CappedDumpableHashMap::new(
+        let mut capped_map: CappedDumpableHashMap<String> = CappedDumpableHashMap::new(
             3,
             "",
             Box::new(dummy),
         );
 
-        capped_map.add(1, "".to_owned());
-        capped_map.add(2, "".to_owned());
-        capped_map.add(2, "".to_owned());
+        capped_map.add(MapKey::NumKey { key: 1 }, "".to_owned());
+        capped_map.add(MapKey::NumKey { key: 2 }, "".to_owned());
+        capped_map.add(MapKey::NumKey { key: 2 }, "".to_owned());
 
         let data = data.take().unwrap();
         assert_eq!(data.len(), 2);
 
-        let key: usize = 2;
+        let key = MapKey::NumKey { key: 2 };
         assert_eq!(data.get(&key).unwrap().len(), 1);
     }
 }
