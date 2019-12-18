@@ -5,10 +5,11 @@ It splits the JSON data set available from [PushShift](https://pushshift.io/) in
 
 At this time, the data can be split by the following keys:
 
-* Subreddit
-* Author
-* Day of month
-* Month
+* Subreddit (subreddit)
+* Author (author)
+* Day of month (day)
+* Month (month)
+* Day of year (day-of-year)
 
 When the data is split, a JSON file is created for each unique key, so if the split is on subreddit, a JSON file
 is created per subreddit.
