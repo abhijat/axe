@@ -23,6 +23,7 @@ fn build_key(entry: &Entry, split_fields: &SplitFields) -> MapKey {
         SplitFields::SubReddit => MapKey::StringKey { key: to_string(&entry.subreddit) },
         SplitFields::Day => MapKey::NumKey { key: entry.created_at().day() as usize },
         SplitFields::Month => MapKey::NumKey { key: entry.created_at().month() as usize },
+        SplitFields::DayOfYear => MapKey::NumKey { key: entry.created_at().ordinal() as usize },
     }
 }
 
@@ -48,6 +49,5 @@ fn parse_json(options: &Options) {
 
 fn main() {
     let options: Options = Options::from_args();
-    eprintln!("options = {:?}", options);
     parse_json(&options);
 }

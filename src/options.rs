@@ -9,6 +9,7 @@ pub enum SplitFields {
     SubReddit,
     Day,
     Month,
+    DayOfYear,
 }
 
 impl FromStr for SplitFields {
@@ -20,6 +21,7 @@ impl FromStr for SplitFields {
             "subreddit" => Ok(SplitFields::SubReddit),
             "day" => Ok(SplitFields::Day),
             "month" => Ok(SplitFields::Month),
+            "day-of-year" => Ok(SplitFields::DayOfYear),
             _ => Err("invalid argument".to_owned())
         }
     }
@@ -32,6 +34,7 @@ impl ToString for SplitFields {
             SplitFields::SubReddit => "subreddit".to_owned(),
             SplitFields::Day => "day".to_owned(),
             SplitFields::Month => "month".to_owned(),
+            SplitFields::DayOfYear => "day-of-year".to_owned(),
         }
     }
 }
