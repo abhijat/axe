@@ -40,14 +40,12 @@ The files will be present in `~/tmp/data-by-sub` after the above run is complete
 
 ```shell script
 ~/dev/rust/axe  (master) 
- abhijat $ cargo run -- --help
-    Finished dev [unoptimized + debuginfo] target(s) in 0.01s
-     Running `target/debug/axe --help`
+ abhijat $ ./target/release/axe --help
 axe 0.1.0
 A utility to split a reddit dataset into individual JSON files
 
 USAGE:
-    axe --input-path <input-path> --output-prefix <output-prefix> --split-on <split-on>
+    axe [OPTIONS] --input-path <input-path> --output-prefix <output-prefix> --split-on <split-on>
 
 FLAGS:
     -h, --help       Prints help information
@@ -55,6 +53,8 @@ FLAGS:
 
 OPTIONS:
     -i, --input-path <input-path>          The path to the data set
+    -m, --max-size <max-size>              The maximum size the hashmap will grow to before it is written to disk
+                                           [default: 150000]
     -o, --output-prefix <output-prefix>    The parent directory where output JSON files will be written
     -s, --split-on <split-on>              The attribute to split the data set on
 
