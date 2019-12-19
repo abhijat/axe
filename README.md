@@ -2,6 +2,7 @@
 
 It splits the JSON data set available from [PushShift](https://pushshift.io/) into smaller JSON files.
 
+It also writes to disk in parallel to cut down on processing time.
 
 At this time, the data can be split by the following keys:
 
@@ -56,5 +57,26 @@ OPTIONS:
     -i, --input-path <input-path>          The path to the data set
     -o, --output-prefix <output-prefix>    The parent directory where output JSON files will be written
     -s, --split-on <split-on>              The attribute to split the data set on
+
+```
+
+###### Sample runtime (4 GB dataset with around 3 million entries)
+```shell script
+~/dev/rust/axe  (master) 
+ abhijat $ time ./target/release/axe -s subreddit -i ~/Downloads/R -o ~/tmp/subr -m 600000
+dumping 600000 entries to disk
+dump finished
+dumping 600000 entries to disk
+dump finished
+dumping 600000 entries to disk
+dump finished
+dumping 600000 entries to disk
+dump finished
+dumping 600000 entries to disk
+dump finished
+
+real	0m24.009s
+user	0m24.364s
+sys	0m16.685s
 
 ```
